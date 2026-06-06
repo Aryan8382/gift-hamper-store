@@ -1,81 +1,100 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-    const navigate = useNavigate();
+  const handleLogin = async (e) => {
+    e.preventDefault();
 
-    const handleLogin = async (e) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/users/login",
+        { email, password }
+      );
 
-        e.preventDefault();
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
 
-        try {
+      alert("Login Successful");
 
-            const response = await axios.post(
-                'http://localhost:5000/api/users/login',
-                { email, password }
-            );
+      navigate("/Homepage");
+    } catch (error) {
+      console.error("Error logging in:", error);
+      alert("Invalid Email or Password");
+    }
+  };
 
-            // Store token
-            localStorage.setItem('token', response.data.token);
+  return (
+    <div className="container d-flex justify-content-center align-items-center min-vh-100">
+      <div className="card shadow-lg p-4" style={{ width: "400px" }}>
+        
+        <h3 className="text-center mb-4 fw-bold">Login</h3>
 
-            localStorage.setItem(
-                'user',
-                JSON.stringify(response.data.user)
-            );
-            alert("Login Successful");
+        <form onSubmit={handleLogin}>
 
-            // Navigate after login
-            navigate('/Homepage');
+          {/* Email */}
+          <div className="mb-3">
+            <label className="form-label">Email</label>
+            <input
+              type="email"
+              className="form-control"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
 
-        } catch (error) {
+          {/* Password */}
+          <div className="mb-3">
+            <label className="form-label">Password</label>
+            <input
+              type="password"
+              className="form-control"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
 
-            console.error('Error logging in:', error);
+          {/* Login Button */}
+          <button type="submit" className="btn btn-primary w-100">
+            Login
+          </button>
 
-            alert("Invalid Email or Password");
-        }
-    };
+          {/* Forgot Password */}
+          <div className="text-center mt-3">
+            <small>
+              <Link
+                to="/forgot-password"
+                className="text-decoration-none fw-semibold"
+              >
+                Forgot Password?
+              </Link>
+            </small>
+          </div>
 
-    return (
-        <div>
+          {/* Register link (optional but useful) */}
+          <div className="text-center mt-2">
+            <small>
+              Don't have an account?{" "}
+              <Link
+                to="/register"
+                className="text-decoration-none fw-semibold"
+              >
+                Register
+              </Link>
+            </small>
+          </div>
 
-            <h2>Login</h2>
-
-            <form onSubmit={handleLogin}>
-
-                <div>
-                    <label>Email:</label>
-
-                    <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
-                </div>
-
-                <div>
-
-                    <label>Password:</label>
-
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
-
-                <button type="submit">
-                    Login
-                </button>
-
-            </form>
-
-        </div>
-    );
+        </form>
+      </div>
+    </div>
+  );
 }

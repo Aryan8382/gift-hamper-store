@@ -51,7 +51,7 @@ exports.login = async (req, res) => {
         if (!email || !password) {
             return res.status(400).json({ message: 'Email and password are required' });
         }
-     
+
 
         const user = await User.findOne({ email });
         if (!user) {
@@ -82,15 +82,22 @@ exports.getProfile = async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
         res.json(user);
+
     }
     catch (error) {
+        console.error('Error fetching user profile:', error);
         res.status(500).json({ message: 'Server error' });
     }
 };
 
 exports.forgetPassword = async (req, res) => {
     try {
+        
+        console.log("GOOGLE_ID:", process.env.GOOGLE_ID);
+        console.log("GOOGLE_PASS:", process.env.GOOGLE_SECRET);
         const { email } = req.body;
+        console.log(email);
+
 
         if (!email) {
             return res.status(400).json({ message: 'Email is required' });
@@ -104,7 +111,7 @@ exports.forgetPassword = async (req, res) => {
 
         const otp = new Otp({
             email,
-            code: otpCode,
+            otp: otpCode,
         });
         await otp.save();
 
@@ -134,7 +141,7 @@ exports.verifyOtp = async (req, res) => {
             return res.status(400).json({ message: 'Email and OTP are required' });
         }
 
-        const otpRecord = await Otp.findOne({ email, code: otp });
+        const otpRecord = await Otp.findOne({ email,  otp });
         if (!otpRecord) {
             return res.status(400).json({ message: 'Invalid OTP' });
         }
