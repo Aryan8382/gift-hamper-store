@@ -4,6 +4,19 @@ const User = require('../model/Usermodel');
 const bcrypt = require('bcryptjs');
 const Otp = require('../model/Otpmodel');
 const transporter = require('../Utils/Sendmails');
+const multer = require('multer');
+const path = require('path');
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/profiles/');
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
+});
+
+const upload = multer({ storage: storage });
 
 exports.register = async (req, res) => {
     try {
@@ -171,3 +184,36 @@ exports.resetPassword = async (req, res) => {
     }
 
 };
+
+exports.updateProfile = async (req, res) => {
+    try {
+        const { name, phone, address, city, postalCode, preferences } = req.body;
+        const userId = req.user.id;
+        
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        if (name) user.name = name;
+        if (phone) user.phone = phone;
+        if (address) user.address = address;
+        if (city) user.city = city;
+        if (postalCode) user.postalCode = postalCode;
+        if (preferences) user.preferences = preferences;
+        
+        if (req.file) {
+            user.profileImage = req.file.filename;
+        }
+
+        await user.save();
+        
+        const updatedUser = await User.findById(userId).select('-password');
+        res.json({ message: 'Profile updated successfully', user: updatedUser });
+    } catch (error) {
+        console.error('Error updating profile:', error);
+        res.status(500).json({ message: 'Server error: ' + error.message });
+    }
+};
+
+exports.uploadProfileImage = upload.single('profileImage');

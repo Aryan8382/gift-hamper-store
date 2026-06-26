@@ -19,6 +19,30 @@ const userSchema = new mongoose.Schema({
         enum: ['customer', 'admin'],
         default: 'customer',
     },
+    profileImage: {
+        type: String,
+        default: null,
+    },
+    phone: {
+        type: String,
+        default: '',
+    },
+    address: {
+        type: String,
+        default: '',
+    },
+    city: {
+        type: String,
+        default: '',
+    },
+    postalCode: {
+        type: String,
+        default: '',
+    },
+    preferences: {
+        type: String,
+        default: '',
+    },
 });
 
 const User = mongoose.model('User', userSchema);

@@ -1,0 +1,427 @@
+/* ═══════════════════════════════════════════════════
+   Niyas Creations — Auth & Profile Styles
+   Used by: Profile.jsx, Login.jsx, Register.jsx
+   Shares design tokens with navbar.css
+   ═══════════════════════════════════════════════════ */
+
+/* ── Design Tokens (shared across all NC stylesheets) ── */
+:root {
+  --nc-rose:        #C9556A;
+  --nc-rose-dark:   #a83f55;
+  --nc-gold:        #D4A843;
+  --nc-gold-light:  #f0d080;
+
+  --nc-cream:       #FDF8F2;
+  --nc-ink:         #1C1410;
+  --nc-ink-soft:    #2d1f17;
+  --nc-muted:       #8a7260;
+  --nc-border:      #e5dbd4;
+  --nc-border-gold: rgba(212, 168, 67, 0.35);
+
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+
+  --shadow-card:    0 16px 48px rgba(28, 20, 16, 0.14);
+  --shadow-input:   0 0 0 3px rgba(212, 168, 67, 0.25);
+  --radius-sm:      8px;
+  --radius-card:    20px;
+}
+
+
+/* ═══════════════════════════════════════════════════
+   PAGE WRAPPER
+   ═══════════════════════════════════════════════════ */
+.nc-auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px;
+  background-color: var(--nc-cream);
+  /* Subtle warm radial glow in the centre */
+  background-image:
+    radial-gradient(ellipse 70% 50% at 50% 20%, rgba(212, 168, 67, 0.10) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 40% at 80% 80%, rgba(201, 85, 106, 0.07) 0%, transparent 65%);
+  font-family: var(--font-body);
+}
+
+
+/* ═══════════════════════════════════════════════════
+   CARD
+   ═══════════════════════════════════════════════════ */
+.nc-auth-card {
+  width: 100%;
+  max-width: 480px;
+  background-color: #fff;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--nc-border);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  /* Entrance animation */
+  animation: nc-card-rise 0.35s ease both;
+}
+
+@keyframes nc-card-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ═══════════════════════════════════════════════════
+   CARD HEADER  (used inline in Profile.jsx via style=,
+   but these classes back up Login / Register layouts)
+   ═══════════════════════════════════════════════════ */
+.nc-auth-header {
+  background: linear-gradient(135deg, var(--nc-ink), var(--nc-ink-soft));
+  padding: 2.5rem 2rem 2rem;
+  text-align: center;
+  border-bottom: 3px solid var(--nc-rose);
+}
+
+.nc-auth-header-title {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 0.35rem;
+  letter-spacing: -0.02em;
+}
+
+.nc-auth-header-sub {
+  font-size: 0.9rem;
+  color: var(--nc-gold-light);
+  margin: 0;
+}
+
+
+/* ═══════════════════════════════════════════════════
+   CARD BODY
+   ═══════════════════════════════════════════════════ */
+.nc-auth-body {
+  padding: 2rem 2rem;
+}
+
+
+/* ═══════════════════════════════════════════════════
+   FORM ELEMENTS
+   ═══════════════════════════════════════════════════ */
+.nc-form-group {
+  margin-bottom: 1.25rem;
+}
+
+.nc-form-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--nc-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+}
+
+.nc-input {
+  display: block;
+  width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  background-color: var(--nc-cream);
+  border: 1.5px solid var(--nc-border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  color: var(--nc-ink);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  /* Allow textarea to override height */
+  box-sizing: border-box;
+}
+
+/* Textarea variant */
+textarea.nc-input {
+  height: auto;
+  padding: 12px 14px;
+  resize: vertical;
+  line-height: 1.55;
+}
+
+.nc-input::placeholder {
+  color: var(--nc-muted);
+  opacity: 0.7;
+}
+
+.nc-input:focus {
+  border-color: var(--nc-gold);
+  background-color: #fff;
+  box-shadow: var(--shadow-input);
+}
+
+/* Read-only email field */
+.nc-input[readonly] {
+  background-color: rgba(229, 219, 212, 0.4);
+  color: var(--nc-muted);
+  cursor: not-allowed;
+}
+
+.nc-input[readonly]:focus {
+  border-color: var(--nc-border);
+  box-shadow: none;
+}
+
+
+/* ═══════════════════════════════════════════════════
+   PRIMARY BUTTON
+   ═══════════════════════════════════════════════════ */
+.nc-btn-primary {
+  display: block;
+  width: 100%;
+  padding: 13px 20px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--nc-rose), var(--nc-rose-dark));
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-align: center;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.nc-btn-primary:hover:not(:disabled) {
+  opacity: 0.92;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(201, 85, 106, 0.35);
+}
+
+.nc-btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.nc-btn-primary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+
+/* ═══════════════════════════════════════════════════
+   SECONDARY / GHOST BUTTON
+   (Cancel, back-links, etc.)
+   ═══════════════════════════════════════════════════ */
+.nc-btn-secondary {
+  display: block;
+  width: 100%;
+  padding: 13px 20px;
+  border: 1.5px solid var(--nc-border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--nc-ink-soft);
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+.nc-btn-secondary:hover {
+  border-color: var(--nc-rose);
+  color: var(--nc-rose);
+  transform: translateY(-1px);
+}
+
+
+/* ═══════════════════════════════════════════════════
+   FEEDBACK MESSAGES  (success / error)
+   ═══════════════════════════════════════════════════ */
+.nc-message {
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1.25rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+  text-align: center;
+  animation: nc-card-rise 0.2s ease both;
+}
+
+.nc-message--success {
+  background-color: #d4f0de;
+  color: #1a5c32;
+  border: 1px solid #a8dbb8;
+}
+
+.nc-message--error {
+  background-color: #fce8ec;
+  color: #7c1d2d;
+  border: 1px solid #f0b8c3;
+  /* Matches the inline style used in Profile.jsx */
+}
+
+
+/* ═══════════════════════════════════════════════════
+   INFO CARDS  (view-mode profile fields)
+   ═══════════════════════════════════════════════════ */
+.nc-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.nc-info-card {
+  background: var(--nc-cream);
+  padding: 1.25rem;
+  border-radius: 12px;
+  border: 1px solid var(--nc-border);
+}
+
+.nc-info-card--accent {
+  background: linear-gradient(
+    135deg,
+    rgba(201, 85, 106, 0.07),
+    rgba(212, 168, 67, 0.07)
+  );
+  border: 1px solid var(--nc-border-gold);
+}
+
+.nc-info-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--nc-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 6px;
+}
+
+.nc-info-value {
+  font-size: 0.97rem;
+  font-weight: 500;
+  color: var(--nc-ink);
+  line-height: 1.5;
+}
+
+.nc-info-empty {
+  color: var(--nc-muted);
+  font-style: italic;
+}
+
+
+/* ═══════════════════════════════════════════════════
+   ROLE BADGE  (shared with sidebar)
+   ═══════════════════════════════════════════════════ */
+.nc-role-badge {
+  display: inline-block;
+  padding: 3px 14px;
+  border-radius: 999px;
+  background-color: linear-gradient(135deg, var(--nc-rose), var(--nc-rose-dark));
+  background: linear-gradient(135deg, var(--nc-rose), var(--nc-rose-dark));
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+
+/* ═══════════════════════════════════════════════════
+   DIVIDER
+   ═══════════════════════════════════════════════════ */
+.nc-auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 1.5rem 0;
+  color: var(--nc-muted);
+  font-size: 0.8rem;
+}
+
+.nc-auth-divider::before,
+.nc-auth-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background-color: var(--nc-border);
+}
+
+
+/* ═══════════════════════════════════════════════════
+   FOOTER / BRAND STRIP
+   ═══════════════════════════════════════════════════ */
+.nc-auth-brand {
+  padding: 1.25rem 2rem;
+  border-top: 1px solid var(--nc-border);
+  text-align: center;
+  background-color: var(--nc-cream);
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--nc-ink);
+  letter-spacing: 0.01em;
+}
+
+
+/* ═══════════════════════════════════════════════════
+   AUTH NAV LINKS  (Login ↔ Register)
+   ═══════════════════════════════════════════════════ */
+.nc-auth-link {
+  display: block;
+  margin-top: 1.25rem;
+  text-align: center;
+  font-size: 0.88rem;
+  color: var(--nc-muted);
+}
+
+.nc-auth-link a {
+  color: var(--nc-rose);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.nc-auth-link a:hover {
+  color: var(--nc-rose-dark);
+  text-decoration: underline;
+}
+
+
+/* ═══════════════════════════════════════════════════
+   LOADING STATE
+   ═══════════════════════════════════════════════════ */
+.nc-auth-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  color: var(--nc-muted);
+  font-size: 0.95rem;
+  font-family: var(--font-body);
+}
+
+
+/* ═══════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  .nc-auth-page {
+    padding: 24px 12px;
+    align-items: flex-start;
+  }
+
+  .nc-auth-card {
+    border-radius: 14px;
+  }
+
+  .nc-auth-body {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .nc-auth-brand {
+    padding: 1rem 1.25rem;
+  }
+
+  .nc-info-grid {
+    grid-template-columns: 1fr;
+  }
+}

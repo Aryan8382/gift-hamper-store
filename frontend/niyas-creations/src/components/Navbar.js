@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { FaUserCircle } from "react-icons/fa";
+import { FaUserCircle, FaShoppingCart, FaSearch, FaHeart, FaGift, FaInfoCircle, FaPhone } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import '../styles/navbar.css';
 
 export default function Navbar() {
   const [user, setUser] = useState(null);
+  const [cartCount, setCartCount] = useState(0);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
@@ -35,6 +38,19 @@ export default function Navbar() {
     navigate("/login");
   };
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      // Navigate to search results page (to be implemented)
+      console.log("Searching for:", searchQuery);
+      // navigate(`/search?q=${searchQuery}`);
+    }
+  };
+
+  const toggleSearch = () => {
+    setIsSearchOpen(!isSearchOpen);
+  };
+
   return (
     <>
       {/* Navbar */}
@@ -44,15 +60,87 @@ export default function Navbar() {
             Niyas Creations
           </Link>
 
-          <button
-            className="nc-user-btn border-0"
-            data-bs-toggle="offcanvas"
-            data-bs-target="#profileSidebar"
-          >
-            <FaUserCircle size={22} />
-          </button>
+          {/* Navigation Links */}
+          <div className="nc-nav-links">
+            <Link className="nc-nav-link" to="/">
+              <FaGift className="nc-nav-icon" />
+              <span>Home</span>
+            </Link>
+            <Link className="nc-nav-link" to="/gift">
+              <FaGift className="nc-nav-icon" />
+              <span>Gifts</span>
+            </Link>
+            <Link className="nc-nav-link" to="/about">
+              <FaInfoCircle className="nc-nav-icon" />
+              <span>About</span>
+            </Link>
+            <Link className="nc-nav-link" to="/contact">
+              <FaPhone className="nc-nav-icon" />
+              <span>Contact</span>
+            </Link>
+          </div>
+
+          {/* Right Side Actions */}
+          <div className="nc-nav-actions">
+            {/* Search Button */}
+            <button className="nc-action-btn" onClick={toggleSearch}>
+              <FaSearch size={20} />
+            </button>
+
+            {/* Wishlist */}
+            <Link className="nc-action-btn" to="/wishlist">
+              <FaHeart size={20} />
+            </Link>
+
+            {/* Cart */}
+            <Link className="nc-action-btn nc-cart-btn" to="/cart">
+              <FaShoppingCart size={20} />
+              {cartCount > 0 && (
+                <span className="nc-cart-badge">{cartCount}</span>
+              )}
+            </Link>
+
+            {/* User Profile */}
+            <button
+              className="nc-user-btn border-0"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#profileSidebar"
+            >
+              {user && user.profileImage ? (
+                <img 
+                  src={`http://localhost:5000/uploads/profiles/${user.profileImage}`} 
+                  alt="Profile" 
+                  className="nc-user-avatar"
+                />
+              ) : (
+                <FaUserCircle size={22} />
+              )}
+            </button>
+          </div>
         </div>
       </nav>
+
+      {/* Search Bar */}
+      {isSearchOpen && (
+        <div className="nc-search-bar">
+          <form onSubmit={handleSearch} className="nc-search-form">
+            <input
+              type="text"
+              className="nc-search-input"
+              placeholder="Search for gifts..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              autoFocus
+            />
+            <button type="submit" className="nc-search-submit">
+              <FaSearch />
+            </button>
+            <button type="button" className="nc-search-close" onClick={toggleSearch}>
+              ×
+            </button>
+          </form>
+        </div>
+      )}
 
       {/* Sidebar */}
       <div
@@ -73,7 +161,15 @@ export default function Navbar() {
           {token && user ? (
             <>
               <div className="nc-avatar-wrap">
-                <FaUserCircle size={90} className="nc-avatar-icon" />
+                {user.profileImage ? (
+                  <img 
+                    src={`http://localhost:5000/uploads/profiles/${user.profileImage}`} 
+                    alt="Profile" 
+                    className="nc-avatar-image"
+                  />
+                ) : (
+                  <FaUserCircle size={90} className="nc-avatar-icon" />
+                )}
                 <h4 className="nc-user-name">{user.name}</h4>
                 <p className="nc-user-email">{user.email}</p>
                 <span className="nc-role-badge">{user.role}</span>

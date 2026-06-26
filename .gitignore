@@ -12,6 +12,14 @@
 /build
 .env
 
+# Backend
+backend/node_modules/
+backend/uploads/
+backend/.env
+
+# Frontend
+frontend/niyas-creations/node_modules/
+
 
 # misc
 .DS_Store
