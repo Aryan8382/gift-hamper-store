@@ -8,16 +8,13 @@ import ForgotPassword from "./pages/ForgotPassword";
 import VerifyOtp from "./pages/verifyotp";
 import ResetPassword from "./pages/ResetPassword";
 
-
 function App() {
   return (
     <div>
 
       <Navbar />
-
       <Routes>
-
-        <Route path="/Homepage" element={<Homepage />} />
+        <Route path="/" element={<Homepage />} />
 
         <Route path="/login" element={<Login />} />
 
@@ -29,6 +26,7 @@ function App() {
 
         <Route path="/reset-password" element={<ResetPassword />} />
 
+    
       </Routes>
 
     </div>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
+import '../styles/auth.css';
 
 function VerifyOtp() {
   const [otp, setOtp] = useState("");
@@ -24,60 +25,80 @@ function VerifyOtp() {
   };
 
   return (
-    <div className="container mt-5">
-      <div className="row justify-content-center">
-        <div className="col-md-6">
-          <div className="card">
-            <div className="card-body">
-              <h2 className="card-title text-center mb-4">Verify OTP</h2>
-              <p className="text-center text-muted mb-4">
-                Enter the 6-digit OTP sent to your email
-              </p>
-              
-              <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                  <label htmlFor="email" className="form-label">Email Address</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    id="email"
-                    value={email}
-                    readOnly
-                  />
-                </div>
-                
-                <div className="mb-3">
-                  <label htmlFor="otp" className="form-label">OTP Code</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="otp"
-                    value={otp}
-                    onChange={(e) => setOtp(e.target.value)}
-                    placeholder="Enter 6-digit OTP"
-                    maxLength={6}
-                    required
-                  />
-                </div>
-                
-                <div className="d-grid gap-2">
-                  <button 
-                    type="submit" 
-                    className="btn btn-success"
-                    disabled={loading}
-                  >
-                    {loading ? "Verifying..." : "Verify OTP"}
-                  </button>
-                </div>
-              </form>
-              
-              <div className="text-center mt-3">
-                <a href="/forgot-password" className="text-decoration-none me-3">Resend OTP</a>
-                <a href="/login" className="text-decoration-none">Back to Login</a>
-              </div>
-            </div>
+    <div className="nc-auth-page">
+      <div className="nc-auth-card">
+
+        {/* Icon */}
+        <div className="nc-auth-icon">✉️</div>
+
+        {/* Heading */}
+        <h3 className="nc-auth-title">Verify OTP</h3>
+        <p className="nc-auth-subtitle">
+          Enter the 6-digit code sent to your email
+        </p>
+        <div className="nc-auth-divider"></div>
+
+        {/* Step indicator */}
+        <div className="nc-steps">
+          <div className="nc-step done">
+            <div className="nc-step-dot">✓</div>
+            <span className="nc-step-label">Email</span>
+          </div>
+          <div className="nc-step-line done"></div>
+          <div className="nc-step active">
+            <div className="nc-step-dot">2</div>
+            <span className="nc-step-label">OTP</span>
+          </div>
+          <div className="nc-step-line"></div>
+          <div className="nc-step">
+            <div className="nc-step-dot">3</div>
+            <span className="nc-step-label">Reset</span>
           </div>
         </div>
+
+        <form onSubmit={handleSubmit}>
+          <div className="nc-form-group">
+            <label className="nc-form-label">Email Address</label>
+            <input
+              type="email"
+              className="nc-input"
+              value={email}
+              readOnly
+            />
+          </div>
+
+          <div className="nc-form-group">
+            <label className="nc-form-label">OTP Code</label>
+            <input
+              type="text"
+              className="nc-input nc-otp-input"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              placeholder="· · · · · ·"
+              maxLength={6}
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="nc-btn-primary"
+            disabled={loading}
+          >
+            {loading ? "Verifying…" : "Verify OTP"}
+          </button>
+        </form>
+
+        <div className="nc-auth-footer-row">
+          <Link to="/forgot-password" className="nc-auth-link-gold">
+            Resend OTP
+          </Link>
+          <Link to="/login" className="nc-auth-link">
+            Back to Login
+          </Link>
+        </div>
+
+        <div className="nc-auth-brand">🎁 Niyas Creations</div>
       </div>
     </div>
   );

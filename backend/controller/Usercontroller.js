@@ -10,8 +10,6 @@ exports.register = async (req, res) => {
 
         const { name, email, password } = req.body;
 
-        console.log("BODY:", req.body);
-
         if (!name || !email || !password) {
             return res.status(400).json({ message: "Missing fields" });
         }
@@ -92,11 +90,7 @@ exports.getProfile = async (req, res) => {
 
 exports.forgetPassword = async (req, res) => {
     try {
-        
-        console.log("GOOGLE_ID:", process.env.GOOGLE_ID);
-        console.log("GOOGLE_PASS:", process.env.GOOGLE_SECRET);
         const { email } = req.body;
-        console.log(email);
 
 
         if (!email) {

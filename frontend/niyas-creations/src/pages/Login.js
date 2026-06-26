@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import '../styles/auth.css';
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -10,18 +11,14 @@ export default function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
     try {
       const response = await axios.post(
         "http://localhost:5000/api/users/login",
         { email, password }
       );
-
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("user", JSON.stringify(response.data.user));
-
       alert("Login Successful");
-
       navigate("/Homepage");
     } catch (error) {
       console.error("Error logging in:", error);
@@ -30,19 +27,25 @@ export default function Login() {
   };
 
   return (
-    <div className="container d-flex justify-content-center align-items-center min-vh-100">
-      <div className="card shadow-lg p-4" style={{ width: "400px" }}>
-        
-        <h3 className="text-center mb-4 fw-bold">Login</h3>
+    <div className="nc-auth-page">
+      <div className="nc-auth-card">
+
+        {/* Icon */}
+        <div className="nc-auth-icon">🎁</div>
+
+        {/* Heading */}
+        <h3 className="nc-auth-title">Welcome Back</h3>
+        <p className="nc-auth-subtitle">Sign in to your account</p>
+        <div className="nc-auth-divider"></div>
 
         <form onSubmit={handleLogin}>
 
           {/* Email */}
-          <div className="mb-3">
-            <label className="form-label">Email</label>
+          <div className="nc-form-group">
+            <label className="nc-form-label">Email</label>
             <input
               type="email"
-              className="form-control"
+              className="nc-input"
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -51,11 +54,11 @@ export default function Login() {
           </div>
 
           {/* Password */}
-          <div className="mb-3">
-            <label className="form-label">Password</label>
+          <div className="nc-form-group">
+            <label className="nc-form-label">Password</label>
             <input
               type="password"
-              className="form-control"
+              className="nc-input"
               placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -63,37 +66,29 @@ export default function Login() {
             />
           </div>
 
-          {/* Login Button */}
-          <button type="submit" className="btn btn-primary w-100">
+          {/* Submit */}
+          <button type="submit" className="nc-btn-primary">
             Login
           </button>
 
-          {/* Forgot Password */}
-          <div className="text-center mt-3">
-            <small>
-              <Link
-                to="/forgot-password"
-                className="text-decoration-none fw-semibold"
-              >
+          {/* Footer links */}
+          <div className="nc-auth-footer">
+            <span>
+              <Link to="/forgot-password" className="nc-auth-link-gold">
                 Forgot Password?
               </Link>
-            </small>
-          </div>
-
-          {/* Register link (optional but useful) */}
-          <div className="text-center mt-2">
-            <small>
+            </span>
+            <span>
               Don't have an account?{" "}
-              <Link
-                to="/register"
-                className="text-decoration-none fw-semibold"
-              >
+              <Link to="/register" className="nc-auth-link">
                 Register
               </Link>
-            </small>
+            </span>
           </div>
 
         </form>
+
+        <div className="nc-auth-brand">🎁 Niyas Creations</div>
       </div>
     </div>
   );

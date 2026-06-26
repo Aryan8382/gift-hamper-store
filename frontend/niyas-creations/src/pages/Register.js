@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import "../styles/auth.css"
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -11,14 +12,12 @@ export default function Register() {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-
     try {
       await axios.post("http://localhost:5000/api/users/register", {
         name,
         email,
         password,
       });
-
       alert("Registration Successful");
       navigate("/login");
     } catch (error) {
@@ -28,19 +27,25 @@ export default function Register() {
   };
 
   return (
-    <div className="container d-flex justify-content-center align-items-center min-vh-100">
-      <div className="card shadow-lg p-4" style={{ width: "420px" }}>
+    <div className="nc-auth-page">
+      <div className="nc-auth-card">
 
-        <h3 className="text-center mb-4 fw-bold">Create Account</h3>
+        {/* Icon */}
+        <div className="nc-auth-icon">🎁</div>
+
+        {/* Heading */}
+        <h3 className="nc-auth-title">Create Account</h3>
+        <p className="nc-auth-subtitle">Join Niyas Creations today</p>
+        <div className="nc-auth-divider"></div>
 
         <form onSubmit={handleRegister}>
 
           {/* Name */}
-          <div className="mb-3">
-            <label className="form-label">Name</label>
+          <div className="nc-form-group">
+            <label className="nc-form-label">Name</label>
             <input
               type="text"
-              className="form-control"
+              className="nc-input"
               placeholder="Enter your name"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -49,11 +54,11 @@ export default function Register() {
           </div>
 
           {/* Email */}
-          <div className="mb-3">
-            <label className="form-label">Email</label>
+          <div className="nc-form-group">
+            <label className="nc-form-label">Email</label>
             <input
               type="email"
-              className="form-control"
+              className="nc-input"
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -62,48 +67,42 @@ export default function Register() {
           </div>
 
           {/* Password */}
-          <div className="mb-3">
-            <label className="form-label">Password</label>
+          <div className="nc-form-group">
+            <label className="nc-form-label">Password</label>
             <input
               type="password"
-              className="form-control"
-              placeholder="Enter your password"
+              className="nc-input"
+              placeholder="Create a password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
 
-          {/* Register Button */}
-          <button type="submit" className="btn btn-success w-100">
-            Register
+          {/* Submit */}
+          <button type="submit" className="nc-btn-primary">
+            Create Account
           </button>
 
-          {/* Links */}
-          <div className="text-center mt-3">
-
-            <small>
+          {/* Footer links */}
+          <div className="nc-auth-footer">
+            <span>
               Already have an account?{" "}
-              <Link to="/login" className="text-decoration-none fw-semibold">
+              <Link to="/login" className="nc-auth-link">
                 Login
               </Link>
-            </small>
-
-          </div>
-
-          <div className="text-center mt-2">
-            <small>
+            </span>
+            <span>
               Forgot password?{" "}
-              <Link
-                to="/forgot-password"
-                className="text-decoration-none text-danger fw-semibold"
-              >
+              <Link to="/forgot-password" className="nc-auth-link-gold">
                 Reset here
               </Link>
-            </small>
+            </span>
           </div>
 
         </form>
+
+        <div className="nc-auth-brand">🎁 Niyas Creations</div>
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import '../styles/navbar.css';
 
 export default function Navbar() {
   const [user, setUser] = useState(null);
@@ -11,27 +11,23 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (token) {
-      getProfile();
-    }
-  }, []);
-
-  const getProfile = async () => {
-    try {
-      const res = await axios.get(
-        "http://localhost:5000/api/users/profile",
-        {
+    const getProfile = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/api/users/profile", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
-      );
+        });
+        setUser(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-      setUser(res.data);
-    } catch (error) {
-      console.log(error);
+    if (token) {
+      getProfile();
     }
-  };
+  }, [token]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -42,101 +38,73 @@ export default function Navbar() {
   return (
     <>
       {/* Navbar */}
-      <nav className="navbar navbar-dark bg-dark px-4">
+      <nav className="navbar nc-navbar px-0">
         <div className="container-fluid">
-          <Link className="navbar-brand fw-bold" to="/">
+          <Link className="nc-brand" to="/">
             Niyas Creations
           </Link>
 
           <button
-            className="btn text-white border-0"
+            className="nc-user-btn border-0"
             data-bs-toggle="offcanvas"
             data-bs-target="#profileSidebar"
           >
-            <FaUserCircle size={35} />
+            <FaUserCircle size={22} />
           </button>
         </div>
       </nav>
 
       {/* Sidebar */}
       <div
-        className="offcanvas offcanvas-end"
+        className="offcanvas offcanvas-end nc-sidebar"
         tabIndex="-1"
         id="profileSidebar"
       >
-        <div className="offcanvas-header border-bottom">
-          <h5 className="offcanvas-title">My Account</h5>
+        <div className="offcanvas-header nc-sidebar-header">
+          <h5 className="nc-sidebar-title">My Account</h5>
           <button
             type="button"
-            className="btn-close"
+            className="btn-close nc-sidebar-close"
             data-bs-dismiss="offcanvas"
           ></button>
         </div>
 
-        <div className="offcanvas-body">
+        <div className="offcanvas-body nc-sidebar-body">
           {token && user ? (
             <>
-              <div className="text-center mb-4">
-                <FaUserCircle
-                  size={90}
-                  className="text-primary mb-3"
-                />
-
-                <h4 className="mb-1">{user.name}</h4>
-                <p className="text-muted">{user.email}</p>
-
-                <span className="badge bg-success">
-                  {user.role}
-                </span>
+              <div className="nc-avatar-wrap">
+                <FaUserCircle size={90} className="nc-avatar-icon" />
+                <h4 className="nc-user-name">{user.name}</h4>
+                <p className="nc-user-email">{user.email}</p>
+                <span className="nc-role-badge">{user.role}</span>
               </div>
 
-              <hr />
+              <hr className="nc-divider" />
 
-              <div className="d-grid gap-2">
-                <Link
-                  className="btn btn-outline-primary"
-                >
+              <div>
+                <Link className="nc-btn-edit" to="/profile">
                   Edit Profile
                 </Link>
-
-                <button
-                  className="btn btn-danger"
-                  onClick={handleLogout}
-                >
+                <button className="nc-btn-logout" onClick={handleLogout}>
                   Logout
                 </button>
               </div>
             </>
           ) : (
-            <>
-              <div className="text-center mt-5">
-                <FaUserCircle
-                  size={90}
-                  className="text-secondary mb-3"
-                />
+            <div className="nc-guest-wrap">
+              <FaUserCircle size={90} className="nc-avatar-icon-guest" />
+              <h5 className="nc-guest-title">Welcome, Guest</h5>
+              <p className="nc-guest-sub">Login to access your account</p>
 
-                <h5>Welcome Guest</h5>
-                <p className="text-muted">
-                  Login to access your account
-                </p>
-
-                <div className="d-grid gap-2 mt-4">
-                  <Link
-                    to="/login"
-                    className="btn btn-primary"
-                  >
-                    Login
-                  </Link>
-
-                  <Link
-                    to="/register"
-                    className="btn btn-outline-success"
-                  >
-                    Register
-                  </Link>
-                </div>
+              <div>
+                <Link to="/login" className="nc-btn-login">
+                  Login
+                </Link>
+                <Link to="/register" className="nc-btn-register">
+                  Create Account
+                </Link>
               </div>
-            </>
+            </div>
           )}
         </div>
       </div>

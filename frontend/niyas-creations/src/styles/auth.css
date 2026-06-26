@@ -1,0 +1,347 @@
+/* ============================================
+   Niyas Creations — Auth Pages (Login & Register)
+   Warm Luxury Gift Store Style
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap');
+
+/* ── Variables (mirrors Navbar.css) ── */
+:root {
+  --nc-rose:        #C9556A;
+  --nc-rose-dark:   #a83f55;
+  --nc-gold:        #D4A843;
+  --nc-gold-light:  #f0d080;
+  --nc-cream:       #FDF8F2;
+  --nc-ink:         #1C1410;
+  --nc-ink-soft:    #2d1f17;
+  --nc-muted:       #8a7260;
+  --nc-border:      #e5dbd4;
+  --nc-border-gold: rgba(212, 168, 67, 0.35);
+
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+
+  --shadow-card: 0 16px 48px rgba(28, 20, 16, 0.14);
+  --radius-sm:   8px;
+  --radius-card: 20px;
+}
+
+/* ── Page Background ── */
+.nc-auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, #f5ede3 0%, #fdf8f2 50%, #f0e4d7 100%);
+  font-family: var(--font-body);
+  padding: 2rem 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle decorative blobs */
+.nc-auth-page::before,
+.nc-auth-page::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0.18;
+}
+.nc-auth-page::before {
+  width: 480px;
+  height: 480px;
+  background: radial-gradient(circle, var(--nc-rose), transparent 70%);
+  top: -120px;
+  right: -120px;
+}
+.nc-auth-page::after {
+  width: 380px;
+  height: 380px;
+  background: radial-gradient(circle, var(--nc-gold), transparent 70%);
+  bottom: -100px;
+  left: -100px;
+}
+
+/* ── Card ── */
+.nc-auth-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  border-radius: var(--radius-card);
+  padding: 2.5rem 2.25rem;
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--nc-border);
+}
+
+/* ── Gift icon badge ── */
+.nc-auth-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--nc-ink), var(--nc-ink-soft));
+  margin: 0 auto 1.25rem;
+  font-size: 1.5rem;
+  box-shadow: 0 4px 16px rgba(28, 20, 16, 0.2);
+}
+
+/* ── Heading ── */
+.nc-auth-title {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--nc-ink);
+  margin-bottom: 0.35rem;
+  letter-spacing: -0.01em;
+}
+
+.nc-auth-subtitle {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--nc-muted);
+  margin-bottom: 2rem;
+}
+
+/* ── Divider line under title ── */
+.nc-auth-divider {
+  width: 40px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--nc-rose), var(--nc-gold));
+  border-radius: 2px;
+  margin: 0 auto 1.75rem;
+}
+
+/* ── Form Labels ── */
+.nc-form-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--nc-ink-soft);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+  display: block;
+}
+
+/* ── Inputs ── */
+.nc-input {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border: 1.5px solid var(--nc-border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  color: var(--nc-ink);
+  background: var(--nc-cream);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+}
+
+.nc-input::placeholder {
+  color: #c4b5a8;
+}
+
+.nc-input:focus {
+  border-color: var(--nc-rose);
+  box-shadow: 0 0 0 3px rgba(201, 85, 106, 0.12);
+  background: #fff;
+}
+
+.nc-form-group {
+  margin-bottom: 1.2rem;
+}
+
+/* ── Primary Submit Button ── */
+.nc-btn-primary {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--nc-rose), var(--nc-rose-dark));
+  color: #fff;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 16px rgba(201, 85, 106, 0.35);
+  transition: all 0.22s ease;
+  margin-top: 0.5rem;
+}
+
+.nc-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(201, 85, 106, 0.45);
+}
+
+.nc-btn-primary:active {
+  transform: translateY(0);
+}
+
+/* ── Footer Links ── */
+.nc-auth-footer {
+  text-align: center;
+  margin-top: 1.4rem;
+  font-size: 0.84rem;
+  color: var(--nc-muted);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.nc-auth-link {
+  color: var(--nc-rose);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.18s ease;
+}
+
+.nc-auth-link:hover {
+  color: var(--nc-rose-dark);
+  text-decoration: underline;
+}
+
+.nc-auth-link-gold {
+  color: #8a6a20;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.18s ease;
+}
+
+.nc-auth-link-gold:hover {
+  color: var(--nc-gold);
+  text-decoration: underline;
+}
+
+/* ── Readonly Input ── */
+.nc-input[readonly] {
+  background: #f0ebe6;
+  color: var(--nc-muted);
+  cursor: not-allowed;
+  border-color: #ddd4cc;
+}
+
+.nc-input[readonly]:focus {
+  border-color: #ddd4cc;
+  box-shadow: none;
+}
+
+/* ── Disabled Button State ── */
+.nc-btn-primary:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ── Step Indicator (Forgot → OTP → Reset) ── */
+.nc-steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 1.75rem;
+}
+
+.nc-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.nc-step-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--nc-border);
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--nc-muted);
+  transition: all 0.2s ease;
+}
+
+.nc-step.active .nc-step-dot {
+  background: linear-gradient(135deg, var(--nc-rose), var(--nc-rose-dark));
+  border-color: var(--nc-rose);
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(201, 85, 106, 0.35);
+}
+
+.nc-step.done .nc-step-dot {
+  background: linear-gradient(135deg, var(--nc-gold), #b8892e);
+  border-color: var(--nc-gold);
+  color: #fff;
+}
+
+.nc-step-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--nc-muted);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.nc-step.active .nc-step-label {
+  color: var(--nc-rose);
+}
+
+.nc-step.done .nc-step-label {
+  color: #8a6a20;
+}
+
+.nc-step-line {
+  width: 36px;
+  height: 2px;
+  background: var(--nc-border);
+  margin-bottom: 1.1rem;
+  flex-shrink: 0;
+}
+
+.nc-step-line.done {
+  background: linear-gradient(90deg, var(--nc-gold), var(--nc-rose));
+}
+
+/* ── OTP Input (larger, centered) ── */
+.nc-otp-input {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.5em;
+  color: var(--nc-ink);
+}
+
+/* ── Footer inline row ── */
+.nc-auth-footer-row {
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-top: 1.4rem;
+  font-size: 0.84rem;
+  color: var(--nc-muted);
+}
+
+/* ── Brand watermark at bottom of card ── */
+.nc-auth-brand {
+  text-align: center;
+  margin-top: 1.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--nc-border);
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  background: linear-gradient(120deg, var(--nc-gold), var(--nc-rose));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
